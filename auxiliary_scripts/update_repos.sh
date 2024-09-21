@@ -73,7 +73,31 @@ for i in $(seq $start $end); do
     cp -r ../${local_repo}/* .
     cp -r ../${local_repo}/.github .
 
-    
+    # Add, commit, and push the changes
+    echo "$(pwd)"
+    echo "Adding files to ${repo_name}..."
+    git add .
+    echo "Committing changes in ${repo_name}..."
+    git commit -m "Copied files from ${local_repo}"
+    echo "Pushing changes to ${repo_name}..."
+    git push origin master
+    if [ $? -ne 0 ]; then
+        echo "Failed to push changes to ${repo_name}. Skipping..."
+        cd ..
+        rm -rf ${repo_name}
+        print_separator
+        continue
+    fi
+
+    # Change back to the parent directory
+    cd ..
+
+    # Remove the cloned repository to clean up
+    echo "Cleaning up ${repo_name}..."
+    rm -rf ${repo_name}
+
+    echo "Finished processing ${repo_name}."
+    print_separator
 done
 
 echo "All repositories have been updated."
