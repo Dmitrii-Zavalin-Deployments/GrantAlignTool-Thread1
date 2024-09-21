@@ -18,7 +18,7 @@ print_separator
 # Define the base repository name and the range of repositories
 base_repo="GrantAlignTool-Thread"
 start=1
-end=1
+end=15
 
 # Get the local repository path from the argument
 local_repo="GrantAlignTool"
